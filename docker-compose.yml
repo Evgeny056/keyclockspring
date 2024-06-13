@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:21.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -11,7 +13,7 @@ services:
       - "8443:8443"
     volumes:
       - keycloak_data:/opt/keycloak/data
-    entrypoint: [ "/opt/keycloak/bin/kc.sh", "start-dev" ]
+    entrypoint: [ "/bin/sh", "-c", "/opt/keycloak/bin/kc.sh start-dev --import-realm && /opt/keycloak/import-client-scope.sh" ]
 
 volumes:
   keycloak_data:
