@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/profile").authenticated()
                                 .anyRequest().authenticated()
                 ).build();
     }
